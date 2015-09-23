@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 /**
  *
- * @author Calebe de Paula Bianchini
+ * @author William Zischang Cisang
  */
 public class TicketMachine {
 
@@ -22,7 +22,7 @@ public class TicketMachine {
     public void inserir(int quantia) throws PapelMoedaInvalidaException {
         boolean achou = false;
         for (int i = 0; i < papelMoeda.length && !achou; i++) {
-            if (papelMoeda[1] == quantia) {
+            if (papelMoeda[i] == quantia) {
                 achou = true;
             }
         }
@@ -36,14 +36,18 @@ public class TicketMachine {
         return saldo;
     }
 
-    public Iterator<Integer> getTroco() {
-        return null;
+    public Iterator<PapelMoeda> getTroco() {
+        Troco troco = new Troco(this.saldo);
+        return troco.getIterator();
+        
+        
     }
 
     public String imprimir() throws SaldoInsuficienteException {
         if (saldo < valor) {
             throw new SaldoInsuficienteException();
         }
+        this.saldo = this.saldo - this.valor;
         String result = "*****************\n";
         result += "*** R$ " + saldo + ",00 ****\n";
         result += "*****************\n";
